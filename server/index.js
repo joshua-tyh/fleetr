@@ -1,23 +1,40 @@
 import express from "express"
+import bodyParser from "body-parser"
+import Fleetr from "./models/fleetr.model.js"
+import { init as InitializeDatabase } from "./db.js"
 
-const app = express()
 const PORT = 8080
+const app = express()
+
+InitializeDatabase()
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get("/", (req, res) => {
 	res.send("Hello World!")
 })
 
-/**
- * @description This endpoint is used by Fleetr devices to report their locations.
- * Currently, it logs the received POST request and the request body to the console.
- *
- * @param req - The request object containing the incoming request data.
- * @param res - The response object used to send a response back to the client.
- */
-app.post("/api/report", (req, res) => {
-	console.log("Received a POST request")
-	console.log(req.body)
-	res.send("Hello from POST!")
+app.post("/sms/ping", async (req, res) => {
+	try {
+		const { Body, From } = req.body
+
+		const [latitude, longitude] = Body.split(",").map((coord) =>
+			parseFloat(coord)
+		)
+
+		const ping = await Fleetr.receiveCoordinates(From, latitude, longitude)
+
+		res.status(200).json({
+			message: "Coordinates received successfully",
+			...ping
+		})
+	} catch (error) {
+		console.error("Error processing SMS:", error.message)
+		res
+			.status(error.statusCode ?? 500)
+			.send(error.message ?? "Internal Server Error")
+		return
+	}
 })
 
 app.listen(PORT, () => {

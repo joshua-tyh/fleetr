@@ -7,11 +7,18 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node index.js",
-		"ngrok": "ngrok http 8080"
+		"dev": "nodemon index.js"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"express": "^5.1.0"
+		"body-parser": "^2.2.0",
+		"express": "^5.1.0",
+		"http-errors": "^2.0.0",
+		"knex": "^3.1.0",
+		"pg": "^8.14.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.9"
 	}
 }
