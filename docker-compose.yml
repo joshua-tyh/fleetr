@@ -21,6 +21,7 @@ services:
     container_name: fleetr_ngrok
     command:
       - "http"
+      - "--url=sheepdog-intent-kindly.ngrok-free.app" # Set to Josh's NGROK URL
       - "http://fleetr_server:8080"
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
