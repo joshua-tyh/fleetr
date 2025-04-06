@@ -9,7 +9,7 @@ export async function init() {
 	await retryConnection()
 		.then(async () => await check())
 		.then(async (pass) => await migrate().then(() => pass))
-		// .then(async (pass) => !pass && (await seed()))
+		.then(async (pass) => !pass && (await seed()))
 		.finally(() => console.log("Database initialization complete"))
 		.catch((error) => {
 			console.error("Error initializing database:", error)
