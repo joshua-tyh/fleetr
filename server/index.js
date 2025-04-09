@@ -10,7 +10,7 @@ InitializeDatabase()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
 	res.send("Hello World!")
 })
 
@@ -37,7 +37,7 @@ app.post("/sms/ping", async (req, res) => {
 	}
 })
 
-app.post("/http/ping", async (req, res) => {
+app.post("/api/ping", async (req, res) => {
 	try {
 		const { latitude, longitude, contact_number } = req.body
 
