@@ -4,6 +4,8 @@ services:
     build:
       context: ./client
     container_name: fleetr_client
+    environment:
+      VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY}
     volumes:
       - ./client:/app
       - /app/node_modules

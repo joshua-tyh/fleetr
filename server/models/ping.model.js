@@ -22,7 +22,7 @@ export default class Ping {
 		)
 	}
 
-	static async getAll(db) {
+	static async getAll() {
 		const rows = await db("pings").select("*")
 		return rows.map(Ping.fromDbRow)
 	}

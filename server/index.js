@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import Fleetr from "./models/fleetr.model.js"
+import Ping from "./models/ping.model.js"
 import { init as InitializeDatabase } from "./db.js"
 
 const PORT = 8080
@@ -25,7 +26,7 @@ app.post("/sms/ping", async (req, res) => {
 		const ping = await Fleetr.receiveCoordinates(From, latitude, longitude)
 
 		res.status(200).json({
-			message: "Coordinates received successfully",
+			message: "Ping received successfully",
 			...ping
 		})
 	} catch (error) {
@@ -48,11 +49,45 @@ app.post("/api/ping", async (req, res) => {
 		)
 
 		res.status(200).json({
-			message: "Coordinates received successfully",
+			message: "Ping received successfully",
 			...ping
 		})
 	} catch (error) {
 		console.error("Error processing HTTP request:", error.message)
+		res
+			.status(error.statusCode ?? 500)
+			.send(error.message ?? "Internal Server Error")
+		return
+	}
+})
+
+app.get("/api/ping", async (req, res) => {
+	try {
+		const pings = await Ping.getAll()
+
+		res.status(200).json({
+			message: "Pings retrieved successfully",
+			pings
+		})
+	} catch (error) {
+		console.error("Error retrieving pings:", error.message)
+		res
+			.status(error.statusCode ?? 500)
+			.send(error.message ?? "Internal Server Error")
+		return
+	}
+})
+
+app.get("/api/fleetr", async (req, res) => {
+	try {
+		const fleetrs = await Fleetr.getAll()
+
+		res.status(200).json({
+			message: "Fleetrs retrieved successfully",
+			fleetrs
+		})
+	} catch (error) {
+		console.error("Error retrieving fleetrs:", error.message)
 		res
 			.status(error.statusCode ?? 500)
 			.send(error.message ?? "Internal Server Error")

@@ -34,7 +34,7 @@ export default class Fleetr {
 		)
 	}
 
-	static async getAll(db) {
+	static async getAll() {
 		const rows = await db("fleetrs").select("*")
 		return rows.map(Fleetr.fromDbRow)
 	}
