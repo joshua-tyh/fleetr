@@ -1,5 +1,5 @@
 {
-	"name": "fleetr",
+	"name": "fleetr-server",
 	"version": "1.0.0",
 	"description": "Server for Fleetr",
 	"main": "index.js",
