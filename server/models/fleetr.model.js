@@ -22,15 +22,7 @@ export default class Fleetr {
 				fleetr === null ? await Fleetr.create(contact_number) : fleetr
 		)
 
-		console.log(
-			`Fleetr ${fleetr.id} (${fleetr.contact_number}) received coordinates: ${latitude}, ${longitude}`
-		)
-
-		const ping = await Ping.create(fleetr.id, latitude, longitude)
-		console.log(
-			`Ping ${ping.id} created for Fleetr ${fleetr.id} (${fleetr.contact_number})`
-		)
-		return ping
+		return await Ping.create(fleetr.id, latitude, longitude)
 	}
 
 	static fromDbRow(row) {
