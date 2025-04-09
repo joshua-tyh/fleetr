@@ -5,7 +5,12 @@
 export async function up(knex) {
 	return knex.schema.createTable("pings", (table) => {
 		table.increments("id").primary()
-		table.integer("fleetr_id").references("fleetrs.id").notNullable().onDelete("CASCADE").onUpdate("CASCADE")
+		table
+			.integer("fleetr_id")
+			.references("fleetrs.id")
+			.notNullable()
+			.onDelete("CASCADE")
+			.onUpdate("CASCADE")
 		table.double("latitude").notNullable()
 		table.double("longitude").notNullable()
 		table.timestamps(true, true)
