@@ -29,7 +29,30 @@ app.post("/sms/ping", async (req, res) => {
 			...ping
 		})
 	} catch (error) {
-		console.error("Error processing SMS:", error.message)
+		console.error("Error processing SMS request:", error.message)
+		res
+			.status(error.statusCode ?? 500)
+			.send(error.message ?? "Internal Server Error")
+		return
+	}
+})
+
+app.post("/http/ping", async (req, res) => {
+	try {
+		const { latitude, longitude, contact_number } = req.body
+
+		const ping = await Fleetr.receiveCoordinates(
+			contact_number,
+			latitude,
+			longitude
+		)
+
+		res.status(200).json({
+			message: "Coordinates received successfully",
+			...ping
+		})
+	} catch (error) {
+		console.error("Error processing HTTP request:", error.message)
 		res
 			.status(error.statusCode ?? 500)
 			.send(error.message ?? "Internal Server Error")
