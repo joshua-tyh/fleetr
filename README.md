@@ -8,38 +8,46 @@ The server is built using the following technologies:
 
 - **Node.js**: A JavaScript runtime for building scalable network applications.
 - **Express.js**: A minimal and flexible Node.js web application framework for handling HTTP requests.
-
-The server listens on port `8080` and provides an endpoint (`/`) that currently responds with a simple "Hello World!" message.
+- **PostgreSQL**: A powerful, open-source relational database system.
+- **ngrok**: A tool for exposing local servers to the internet.
 
 ## Getting Started
 
-Follow these steps to set up and run the development environment:
+Follow these steps to set up and run the development environment using Docker.
 
 ### Prerequisites
 
-- Install [Node.js](https://nodejs.org/) (v16 or higher recommended).
-- Install [ngrok](https://ngrok.com/) for exposing local servers to the internet.
+- Install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 
-### Installation
+### Environment Variables
 
-1. Navigate to the `server` directory:
-   ```sh
-   cd server
-   ```
-2. Install the dependencies:
-   ```sh
-   npm install
+Obtain the `.env` file and place it in the root of the project.
+
+### Setup and Run
+
+1. Build and start the Docker containers:
+
+   ```bash
+   docker compose up -d --build
    ```
 
-### Running the Server
+2. Once the containers are running:
 
-1. Start the server:
-   ```sh
-   npm run start
-   ```
-   This will start the server on `http://localhost:8080`.
-2. In a seperate terminal, expose the server using ngrok:
-   ```sh
-   npm run ngrok
-   ```
-   Once the server is running, you can visit the proxied public URL provided by ngrok in your browser to see the "Hello World!" response.
+   The ngrok service will expose the server to the internet. You can access the ngrok dashboard at http://localhost:4040 to see the live public URL.
+
+3. Verifying the Setup
+
+   1. Open your browser and navigate to http://localhost:4040.
+   2. In the ngrok dashboard, you will see the public URL (currently set to Josh's static URL https://sheepdog-intent-kindly.ngrok-free.app) that proxies requests to your local server.
+   3. Send SMS pings to the Twilio US number of [+1 (920) 315-8362](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming/PNbe5ff640d8213b2bf3dfe4b186872377/properties) with the format "Latitude, Longitude" (e.g. "1.2917949, 103.7744415").
+
+
+### Stopping the Containers
+
+To stop the containers, run:
+
+```bash
+docker compose down -v
+```
+
+This will stop and remove all running containers, along with any volumes created.
