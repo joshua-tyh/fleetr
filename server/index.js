@@ -42,16 +42,13 @@ app.post("/http/ping", async (req, res) => {
 	try {
 		const { latitude, longitude, contact_number } = req.body
 
-		const ping = await Fleetr.receiveCoordinates(
-			contact_number,
-			latitude,
-			longitude
-		)
+		// const ping = await Fleetr.receiveCoordinates(
+		// 	contact_number,
+		// 	latitude,
+		// 	longitude
+		// )
 
-		res.status(200).json({
-			message: "Coordinates received successfully",
-			...ping
-		})
+		res.status(200).json(`Latitude: ${latitude}, Longitude: ${longitude}`)
 	} catch (error) {
 		console.error("Error processing HTTP request:", error.message)
 		res
