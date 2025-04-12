@@ -10,6 +10,7 @@ const app = express()
 InitializeDatabase()
 
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.get("/api", (req, res) => {
 	res.send("Hello World!")
