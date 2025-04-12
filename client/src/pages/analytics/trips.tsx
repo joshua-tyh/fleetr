@@ -21,7 +21,7 @@ export default function Trips() {
 	return (
 		<div className="flex flex-col gap-2 h-full">
 			<h1 className="text-2xl font-semibold">Trips</h1>
-			<div className="flex flex-row gap-4 max-h-[calc(100vh-286px)] h-full">
+			<div className="flex flex-row gap-4 max-h-[calc(100vh-154px)] h-full">
 				<TripsTable setSelectedTrip={setSelectedTrip} />
 				<div className="rounded-lg overflow-hidden w-full h-full">
 					<Map trips={selectedTrip ? [selectedTrip] : []} />
