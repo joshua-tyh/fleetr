@@ -9,7 +9,7 @@ export default function Page() {
 		<SidebarProvider className="max-h-screen">
 			<AppSidebar variant="inset" />
 			<SidebarInset>
-				<SiteHeader name="Dashboard" />
+				<SiteHeader name="Analytics" />
 				<div className="@container/main flex flex-1 flex-col gap-6 p-6">
 					<div className="flex flex-col gap-4 md:gap-6">
 						<SectionCards />

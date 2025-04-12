@@ -1,6 +1,5 @@
+import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { fetchPings } from "../lib/getters"
-import { groupPingsIntoTrips } from "@/lib/helpers"
 import {
 	Table,
 	TableBody,
@@ -10,10 +9,11 @@ import {
 	TableHeader,
 	TableRow
 } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Trip } from "@/lib/types"
-import { useState } from "react"
-import AnalyserMap from "./AnalyserMap"
-import { ScrollArea } from "./ui/scroll-area"
+import { fetchPings } from "@/lib/getters"
+import { groupPingsIntoTrips } from "@/lib/helpers"
+import Map from "./map"
 
 export default function Trips() {
 	const [selectedTrip, setSelectedTrip] = useState<Trip | undefined>()
@@ -24,7 +24,7 @@ export default function Trips() {
 			<div className="flex flex-row gap-4 max-h-[calc(100vh-286px)] h-full">
 				<TripsTable setSelectedTrip={setSelectedTrip} />
 				<div className="rounded-lg overflow-hidden w-full h-full">
-					<AnalyserMap trips={selectedTrip ? [selectedTrip] : []} />
+					<Map trips={selectedTrip ? [selectedTrip] : []} />
 				</div>
 			</div>
 		</div>

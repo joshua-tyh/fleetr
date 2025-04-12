@@ -1,8 +1,8 @@
-import { Map, useMap } from "@vis.gl/react-google-maps"
+import { Map as GoogleMap, useMap } from "@vis.gl/react-google-maps"
 import { useEffect, useMemo, useRef } from "react"
-import { Trip } from "../lib/types"
+import { Trip } from "@/lib/types"
 
-export default function AnalyserMap({ trips }: Readonly<{ trips: Trip[] }>) {
+export default function Map({ trips }: Readonly<{ trips: Trip[] }>) {
 	const center = useMemo(() => {
 		if (trips.length === 0) return { lat: 1.3521, lng: 103.8198 }
 		return {
@@ -12,14 +12,14 @@ export default function AnalyserMap({ trips }: Readonly<{ trips: Trip[] }>) {
 	}, [trips])
 
 	return (
-		<Map
+		<GoogleMap
 			defaultCenter={center}
 			defaultZoom={12}
 			gestureHandling={"greedy"}
 			disableDefaultUI={true}
 		>
 			<PolylineRenderer trips={trips} />
-		</Map>
+		</GoogleMap>
 	)
 }
 
