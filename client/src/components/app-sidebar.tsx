@@ -40,11 +40,6 @@ const data = {
 			icon: LayoutDashboardIcon
 		},
 		{
-			title: "Lifecycle",
-			url: "#",
-			icon: ListIcon
-		},
-		{
 			title: "Analytics",
 			url: "/analytics",
 			icon: BarChartIcon
@@ -58,6 +53,11 @@ const data = {
 			title: "Team",
 			url: "#",
 			icon: UsersIcon
+		},
+		{
+			title: "Lifecycle",
+			url: "#",
+			icon: ListIcon
 		}
 	],
 	navSecondary: [
