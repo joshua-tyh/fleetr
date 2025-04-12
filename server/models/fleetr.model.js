@@ -34,7 +34,7 @@ export default class Fleetr {
 		)
 	}
 
-	static async getAll(db) {
+	static async getAll() {
 		const rows = await db("fleetrs").select("*")
 		return rows.map(Fleetr.fromDbRow)
 	}
@@ -50,7 +50,9 @@ export default class Fleetr {
 	}
 
 	static async create(contact_number) {
-		const [row] = await db("fleetrs").insert({ contact_number }).returning("*")
+		const [row] = await db("fleetrs")
+			.insert({ id: 11, contact_number })
+			.returning("*")
 		return Fleetr.fromDbRow(row)
 	}
 
