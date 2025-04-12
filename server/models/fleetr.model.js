@@ -50,7 +50,9 @@ export default class Fleetr {
 	}
 
 	static async create(contact_number) {
-		const [row] = await db("fleetrs").insert({ contact_number }).returning("*")
+		const [row] = await db("fleetrs")
+			.insert({ id: 11, contact_number })
+			.returning("*")
 		return Fleetr.fromDbRow(row)
 	}
 

@@ -32,8 +32,8 @@ export default class Ping {
 		return row ? Ping.fromDbRow(row) : null
 	}
 
-	static async getByFleetrId(fleetr_id) {
-		const rows = await db("pings").where({ fleetr_id }).returning("*")
+	static async getByFleetrId(fleetr_id, limit = 1) {
+		const rows = await db("pings").where({ fleetr_id }).returning("*").orderBy("created_at", "desc").limit(limit)
 		return rows.map(Ping.fromDbRow)
 	}
 

@@ -17,8 +17,8 @@ function interpolateRoute(start, end, steps) {
 
 export async function seed(knex) {
 	await knex("pings").del()
+	await knex.raw("ALTER SEQUENCE pings_id_seq RESTART WITH 1")
 	const pings = []
-	let pingId = 1
 
 	for (let fleetrId = 1; fleetrId <= 10; fleetrId++) {
 		let totalPings = faker.number.int({ min: 20, max: 30 })
@@ -39,7 +39,6 @@ export async function seed(knex) {
 
 			for (let i = 0; i < pingsPerTrip; i++) {
 				pings.push({
-					id: pingId++,
 					fleetr_id: fleetrId,
 					latitude: tripPath[i].lat,
 					longitude: tripPath[i].lng,

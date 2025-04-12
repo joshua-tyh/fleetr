@@ -1,8 +1,8 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SectionCards } from "@/pages/dashboard/section-cards"
-import { SiteHeader } from "@/components/site-header"
-import Trips from "@/pages/dashboard/trips"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+import { SiteHeader } from "@/components/site-header"
+import { SectionCards } from "@/pages/analytics/section-cards"
+import Trips from "@/pages/analytics/trips"
 
 export default function Page() {
 	return (
