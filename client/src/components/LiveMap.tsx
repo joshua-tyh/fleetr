@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { AdvancedMarker, Map, useMap } from "@vis.gl/react-google-maps"
 
-const jitterCoord = (value: number, jitterAmount = 0.0009) => {
+const jitterCoord = (value: number, jitterAmount = 0.001) => {
 	return value + (Math.random() * jitterAmount - jitterAmount / 2)
 }
 
@@ -31,11 +31,12 @@ export default function LiveMap() {
 
 	return (
 		<Map
-			defaultZoom={16}
+			style={{ width: "100%", height: "100%" }}
+			defaultZoom={1}
 			defaultCenter={center}
+			disableDefaultUI={true}
 			mapId="fleetr-tracker"
 			gestureHandling="greedy"
-			style={{ width: "100%", height: "100vh" }}
 		>
 			<LivePolyline path={pings} />
 			<PulsatingMarker position={center} />
@@ -58,8 +59,8 @@ function LivePolyline({
 			path,
 			geodesic: true,
 			strokeColor: "#4285F4",
-			strokeOpacity: 1.0,
-			strokeWeight: 3
+			strokeOpacity: 0.8,
+			strokeWeight: 2
 		})
 		polyline.setMap(map)
 		polylineRef.current = polyline
@@ -78,8 +79,8 @@ function PulsatingMarker({
 		<AdvancedMarker position={position}>
 			<div
 				style={{
-					width: "24px",
-					height: "24px",
+					width: "20px",
+					height: "20px",
 					borderRadius: "50%",
 					backgroundColor: "#4285F4",
 					boxShadow: "0 0 0 rgba(66, 133, 244, 0.4)",

@@ -1,13 +1,16 @@
-import AnalyserOverlay from "./components/AnalyserOverlay"
-import AnalyserMap from "./components/AnalyserMap"
-import MapLayout from "./layouts/MapLayout"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Dashboard from "@/pages/dashboard/page"
+import "./styles.css"
+
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <Dashboard />
+	}
+])
 
 function App() {
-	return (
-		<MapLayout map={<AnalyserMap />}>
-			<AnalyserOverlay />
-		</MapLayout>
-	)
+	return <RouterProvider router={router} />
 }
 
 export default App

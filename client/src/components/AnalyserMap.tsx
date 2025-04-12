@@ -1,38 +1,20 @@
 import { Map, useMap } from "@vis.gl/react-google-maps"
 import { useEffect, useMemo, useRef } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { fetchPings } from "../lib/getters"
-import { groupPingsIntoTrips } from "../lib/helpers"
 import { Trip } from "../lib/types"
 
-export default function AnalyserMap() {
-	const { isPending, isError, data, error } = useQuery({
-		queryKey: ["pings"],
-		queryFn: fetchPings
-	})
-
-	const pings = useMemo(() => data?.pings || [], [data])
-
+export default function AnalyserMap({ trips }: Readonly<{ trips: Trip[] }>) {
 	const center = useMemo(() => {
-		if (pings.length === 0) return { lat: 1.3521, lng: 103.8198 }
-		return { lat: pings[0].latitude, lng: pings[0].longitude }
-	}, [pings])
-
-	const trips = useMemo(() => groupPingsIntoTrips(pings), [pings])
-
-	if (isPending) {
-		return <span>Loading...</span>
-	}
-
-	if (isError) {
-		return <span>Error: {error.message}</span>
-	}
+		if (trips.length === 0) return { lat: 1.3521, lng: 103.8198 }
+		return {
+			lat: trips[0].path[0].lat,
+			lng: trips[0].path[0].lng
+		}
+	}, [trips])
 
 	return (
 		<Map
-			style={{ width: "100vw", height: "100vh" }}
 			defaultCenter={center}
-			defaultZoom={13}
+			defaultZoom={12}
 			gestureHandling={"greedy"}
 			disableDefaultUI={true}
 		>
@@ -82,6 +64,51 @@ function PolylineRenderer({ trips }: { trips: Trip[] }) {
 				})
 
 				circleRefs.current.push(circle)
+
+				// Create a glowing ring effect
+				const radius = 12
+				const opacity = 0.5
+				const glowingCircle = new google.maps.Circle({
+					center: point,
+					radius,
+					strokeColor: "#4285F4",
+					strokeOpacity: opacity,
+					strokeWeight: 0,
+					fillColor: "#4285F4",
+					fillOpacity: opacity,
+					map
+				})
+
+				circleRefs.current.push(glowingCircle)
+
+				// Smoothly animate the glowing ring
+				let startTime: number | null = null
+				const duration = 2000 // duration of one pulse in milliseconds
+
+				function animate(timestamp: number) {
+					if (!startTime) startTime = timestamp
+					const elapsed = timestamp - startTime
+
+					// Calculate progress as a value between 0 and 1
+					const progress = (elapsed % duration) / duration
+
+					// Use a sine wave for smooth pulsing effect
+					const easedProgress = 0.5 * (1 - Math.cos(progress * 2 * Math.PI))
+					const newRadius = 12 + easedProgress * 8 // radius oscillates between 12 and 20
+					const newOpacity = 0.5 - easedProgress * 0.5 // opacity oscillates between 0.5 and 0
+
+					glowingCircle.setOptions({
+						radius: newRadius,
+						fillOpacity: newOpacity,
+						strokeOpacity: newOpacity
+					})
+
+					// Continue the animation
+					requestAnimationFrame(animate)
+				}
+
+				// Start the animation
+				requestAnimationFrame(animate)
 			})
 		})
 

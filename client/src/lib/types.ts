@@ -17,4 +17,5 @@ export type Ping = {
 export type Trip = {
 	fleetr_id: number
 	path: google.maps.LatLngLiteral[]
+	date: Date
 }

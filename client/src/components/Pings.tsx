@@ -17,7 +17,6 @@ function Pings() {
 
 	return (
 		<ul>
-			Pings
 			{data.pings.map((ping) => (
 				<li key={ping.id}>
 					{ping.id} - {ping.latitude}, {ping.longitude} -{" "}

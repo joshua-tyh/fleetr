@@ -20,13 +20,13 @@ export async function seed(knex) {
 	const pings = []
 	let pingId = 1
 
-	for (let fleetrId = 1; fleetrId <= 1; fleetrId++) {
+	for (let fleetrId = 1; fleetrId <= 10; fleetrId++) {
 		let totalPings = faker.number.int({ min: 20, max: 30 })
 		let trips = 4
 		let pingsPerTrip = Math.floor(totalPings / trips)
 		let currentTime = new Date()
 
-		for (let trip = 0; trip < 2; trip++) {
+		for (let trip = 0; trip < trips; trip++) {
 			const start = faker.helpers.arrayElement(locations)
 			let end = faker.helpers.arrayElement(locations)
 

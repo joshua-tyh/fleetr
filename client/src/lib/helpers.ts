@@ -30,7 +30,8 @@ export function groupPingsIntoTrips(pings: Ping[]): Trip[] {
 			}
 			currentTrip = {
 				fleetr_id: ping.fleetr_id,
-				path: []
+				path: [],
+				date: pingTime
 			}
 		}
 
